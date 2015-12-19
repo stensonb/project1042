@@ -21,7 +21,7 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<html><body><h1>Project 1042</h1><form action='toggle' method='get'><button type='submit' value='Submit'>Toggle</button></form></body></html>")
+	fmt.Fprintf(w, "<html><script>function toggle(){var xhr = new XMLHttpRequest();xhr.open('GET','api/toggle',true);xhr.send();}</script><body><h1>Project 1042</h1><button type='submit' value='Submit' onClick=toggle()>Toggle</button></body></html>")
 }
 
 func logRequest(fn http.HandlerFunc) http.HandlerFunc {
