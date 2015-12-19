@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/stianeikeland/go-rpio"
+	"github.com/stensonb/project1042/Godeps/_workspace/src/github.com/stianeikeland/go-rpio"
 	"log"
 	"net/http"
 	"os"
