@@ -5,7 +5,6 @@ import (
 	"github.com/stensonb/project1042/Godeps/_workspace/src/github.com/stianeikeland/go-rpio"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -22,7 +21,7 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<html><body><h1>Project 1042</h1></body></html>")
+	fmt.Fprintf(w, "<html><body><h1>Project 1042</h1><form action='toggle' method='get'><button type='submit' value='Submit'>Toggle</button></form></body></html>")
 }
 
 func logRequest(fn http.HandlerFunc) http.HandlerFunc {
@@ -37,8 +36,7 @@ func main() {
 
 	// Open and map memory to access gpio, check for errors
 	if err := rpio.Open(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	// Unmap gpio memory when done
@@ -50,7 +48,7 @@ func main() {
 	// setup web handlers
 	http.HandleFunc("/", logRequest(mainHandler))
 	http.HandleFunc("/time", logRequest(timeHandler))
-	http.HandleFunc("/toggle", logRequest(toggleHandler))
+	http.HandleFunc("/api/toggle", logRequest(toggleHandler))
 
 	log.Println("Started Project 1042!")
 	log.Println("Listening on :8080")

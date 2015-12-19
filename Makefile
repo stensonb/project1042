@@ -5,3 +5,5 @@ $(BINS): project1042.go
 
 clean:
 	rm -rf $(BINS)
+
+all: clean $(BINS)
