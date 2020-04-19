@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+const servePort string = ":80"
 const pin string = "23"
 
 func toggleHandler(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +44,6 @@ func main() {
 	http.HandleFunc("/api/toggle", logRequest(toggleHandler))
 
 	log.Println("Started Project 1042!")
-	log.Println("Listening on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Listening on", servePort)
+	log.Fatal(http.ListenAndServe(servePort, nil))
 }
