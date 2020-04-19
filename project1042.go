@@ -2,17 +2,19 @@ package main
 
 import (
 	"fmt"
-	"github.com/stianeikeland/go-rpio/v4"
 	"log"
 	"net/http"
+	"os/exec"
 	"time"
 )
 
-// pin GPIO23 is physical pin 3 on the pi
-var pin = rpio.Pin(23)
+const pin string = "23"
 
 func toggleHandler(w http.ResponseWriter, r *http.Request) {
-	pin.Toggle()
+	err := exec.Command("gpioctl", "-t", pin).Run()
+	if err != nil {
+		fmt.Println("gopio toggle failed", err)
+	}
 	fmt.Fprintf(w, "toggled...")
 }
 
@@ -33,17 +35,7 @@ func logRequest(fn http.HandlerFunc) http.HandlerFunc {
 }
 
 func main() {
-
-	// Open and map memory to access gpio, check for errors
-	if err := rpio.Open(); err != nil {
-		log.Fatal(err)
-	}
-
-	// Unmap gpio memory when done
-	defer rpio.Close()
-
-	// Set pin to output mode
-	pin.Output()
+	exec.Command("gpioctl", "-c", pin, "OUT").Run()
 
 	// setup web handlers
 	http.HandleFunc("/", logRequest(mainHandler))
