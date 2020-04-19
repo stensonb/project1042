@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/stensonb/project1042/Godeps/_workspace/src/github.com/stianeikeland/go-rpio"
+	"github.com/stianeikeland/go-rpio/v4"
 	"log"
 	"net/http"
 	"time"
 )
 
-// pin GPIO2 is physical pin 3 on the pi
-var pin = rpio.Pin(2)
+// pin GPIO23 is physical pin 3 on the pi
+var pin = rpio.Pin(23)
 
 func toggleHandler(w http.ResponseWriter, r *http.Request) {
 	pin.Toggle()
