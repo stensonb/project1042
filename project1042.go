@@ -10,11 +10,12 @@ import (
 
 const servePort string = ":80"
 const pin string = "23"
+const html string = "<html><script>function toggle(){var xhr = new XMLHttpRequest();xhr.open('GET','api/toggle',true);xhr.send();}</script><body><h1>Project 1042</h1><button type='submit' value='Submit' onClick=toggle()>Toggle</button></body></html>"
 
 func toggleHandler(w http.ResponseWriter, r *http.Request) {
 	err := exec.Command("gpioctl", "-t", pin).Run()
 	if err != nil {
-		fmt.Println("gopio toggle failed", err)
+		fmt.Println("gpio toggle failed", err)
 	}
 	fmt.Fprintf(w, "toggled...")
 }
@@ -24,7 +25,7 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<html><script>function toggle(){var xhr = new XMLHttpRequest();xhr.open('GET','api/toggle',true);xhr.send();}</script><body><h1>Project 1042</h1><button type='submit' value='Submit' onClick=toggle()>Toggle</button></body></html>")
+	fmt.Fprintf(w, html)
 }
 
 func logRequest(fn http.HandlerFunc) http.HandlerFunc {
